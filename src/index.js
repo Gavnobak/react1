@@ -1,5 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {TodoList} from "./TodoList";
+import {handleTaskAdd, todos} from "./todos";
 
-ReactDOM.render('Hello, world!', document.querySelector('#root')
-);
+export function render() {
+    ReactDOM.render(<React.Fragment>
+            <TodoList list={todos}/>
+            <button onClick={() => handleTaskAdd()}>Add task</button>
+    </React.Fragment>,
+        document.querySelector('#root')
+    );
+}
+
+render();
+
+

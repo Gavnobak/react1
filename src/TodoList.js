@@ -1,8 +1,17 @@
-import React from "react";
-import {TodoItem} from "./TodoItem";
-import {handleDoneChange} from "./todos";
+import React from 'react';
+import { TodoItem } from "./TodoItem";
 
-export function TodoList({list}) {
-    return list.map(item => <TodoItem key={item.id} {...item} onDoneChange={(done) => {handleDoneChange(item, done)}
-    }/>)
+export function TodoList({ shouldShowOnlyUrgent, value, onChange }) {
+    const filteredList = shouldShowOnlyUrgent
+        ? value.filter(item => item.urgent)
+        : value;
+
+    return filteredList.map((currentItem) => <TodoItem
+        key={currentItem.id}
+        value={currentItem}
+        onChange={(newItem) => {
+            const newList = value.map((item) => item.id === currentItem.id ? newItem : item);
+            onChange(newList);
+        }}
+    />);
 }

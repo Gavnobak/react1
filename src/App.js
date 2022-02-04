@@ -3,7 +3,6 @@ import { todos as initialList } from "./todos";
 import { AddTodoItem } from "./AddTodoItem";
 import { TaskFilter } from "./TaskFilter";
 import React from "react";
-import { Timer } from "./Timer";
 
 export function App() {
     const [list, setList] = React.useState(initialList);

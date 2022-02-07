@@ -1,43 +1,16 @@
-import React, { useEffect, useState } from 'react';
-
-const END_OF_WORKDAY_HOURS = 21;
-const END_OF_WORKDAY_MINS = 30;
-
-function getRemainingWorkdayTime() {
-    const now = new Date();
-    const endOfWorkday = new Date();
-    endOfWorkday.setHours(
-        END_OF_WORKDAY_HOURS - now.getHours(),
-        END_OF_WORKDAY_MINS - now.getMinutes(),
-        -now.getSeconds(),
-        -now.getMilliseconds()
-    );
-
-    return {
-        hours: endOfWorkday.getHours(),
-        mins: endOfWorkday.getMinutes(),
-        secs: endOfWorkday.getSeconds()
-    }
-}
+import React, { useState } from 'react';
+import './Timer.css';
+import { useTimer } from "../hooks/useTimer";
 
 export function Timer() {
-    const [remainingTime, setRemainingTime] = useState(getRemainingWorkdayTime());
-    const { hours, mins, secs } = remainingTime;
+  const [isRunning, setRunning] = useState(true);
+  const { hours, mins, secs } = useTimer(isRunning);
 
-    useEffect(() => {
-        console.log('Interval set');
-        const handle = setInterval(() => {
-            setRemainingTime(getRemainingWorkdayTime());
-        }, 500);
-
-        return () => {
-            // clean up
-            console.log('Interval cleared');
-            clearInterval(handle);
-        }
-    }, []);
-
-    return (
-        <div>{hours}:{mins}:{secs}</div>
-    );
+  return (
+    <div className="timer">{hours}:{mins}:{secs}
+      <button onClick={() => setRunning(!isRunning)}>
+        {isRunning ? 'Pause' : 'Play'}
+      </button>
+    </div>
+  );
 }

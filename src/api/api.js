@@ -39,3 +39,8 @@ export async function updateTask(task) {
     }
   });
 }
+
+export async function getTask(id) {
+  const response = await fetch(`${BASE_URL}/tasks/${id}`);
+  return await response.json();
+}
